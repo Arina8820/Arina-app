@@ -30,7 +30,7 @@ export const Note:FC<Props> = function Note({note, onDelete, onEdit, ...props}) 
         {onEdit && (
         <Link
           to="/notes/$id/edit"
-          params={{ id: note.id }}
+          params={{ id: (note.id).toString() }}
           className="absolute top-2 right-10 text-gray-500 hover:text-blue-500 text-2xl font-bold transition-colors"
           title="Редактировать заметку"
         >
