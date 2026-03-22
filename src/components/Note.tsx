@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router"
+import { Pen, Trash } from "lucide-react"
 import type { FC, HTMLAttributes } from "react"
 
 export interface TNote{
@@ -7,24 +9,39 @@ export interface TNote{
     createDate?: Date | string
 }
 
+
+
 interface Props extends HTMLAttributes<HTMLLIElement>{
     note: TNote
     onDelete?: (id: number) => void
+    onEdit?: (id: number) => void
 }
 
-export const Note:FC<Props> = function Note({note, onDelete, ...props}) {
+export const Note:FC<Props> = function Note({note, onDelete, onEdit, ...props}) {
     return <li className="bg-gray-100 border-2 border-gray-200 rounded-xl p-4 relative" {...props}>
         {onDelete && (
             <button
                 onClick={() => onDelete(note.id)}
                 className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-2xl font-bold transition-colors"
             >
-                ✕
+                <Trash className="size-6 via-black mx-auto"/>
             </button>
+        )}
+        {onEdit && (
+        <Link
+          to="/notes/$id/edit"
+          params={{ id: note.id }}
+          className="absolute top-2 right-10 text-gray-500 hover:text-blue-500 text-2xl font-bold transition-colors"
+          title="Редактировать заметку"
+        >
+          <Pen className="mx-auto" size={20} />
+        </Link>
         )}
         <h3 className="text-2xl font-bold mb-4">{note.title}</h3>
         <p className="text-sm line-clamp-3">{note.text}</p>
     </li>
 }
+
+
 
 

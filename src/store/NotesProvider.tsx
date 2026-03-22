@@ -14,6 +14,7 @@ interface NotesContextValues{
         data: Note[]
         addNote: (dto: Note) => void
         deleteNote: (id: number) => void
+        updateNote: (note: Note) => void
         toasts: Toast[]
         addToast: (message: string, type: ToastType, duration?: number) => void
         removeToast: (id: string) => void
@@ -24,6 +25,7 @@ const NoteContext = createContext<NotesContextValues>({
         data: [],
         addNote: () => {},
         deleteNote: () => {},
+        updateNote: () => {},
         toasts: [],
         addToast: () => {},
         removeToast: () => {},
@@ -66,20 +68,9 @@ export const NotesProvider: FC<PropsWithChildren> = function NotesProvider(props
         setToasts((prev) => prev.filter((toast) => toast.id !== id))
     }, [])
 
-    // const updateNote = (dto: UpdateNoteDto) =>{
-    //     const {id, ...nestDto} = dto
-    //     setNotes((prevState) =>
-    //         prevState.map( note => {
-    //             if(note.id === dto.id){
-    //                 return {
-    //                     ...note,
-    //                     ...nestDto
-    //                 }
-    //             }
-    //             return note
-    //         })
-    //     )
-    // }
+    const updateNote = useCallback((note: Note) => {
+        setNotes((prevState) => prevState.map(n => n.id === note.id ? note : n))
+    }, [])
     
     const [notes, setNotes] = useState<Note[]>([])
     const [toasts, setToasts] = useState<Toast[]>([])
@@ -88,6 +79,7 @@ export const NotesProvider: FC<PropsWithChildren> = function NotesProvider(props
         data: notes,
         addNote,
         deleteNote,
+        updateNote,
         toasts,
         addToast,
         removeToast,
