@@ -11,5 +11,7 @@ export default defineConfig({
       autoCodeSplitting: true,
     }),
     react(), 
-    tailwindcss()],
+    tailwindcss()
+  ],
+  base: '/Arina-app/', // <- сюда впиши точное имя твоего репозитория на GitHub
 })
